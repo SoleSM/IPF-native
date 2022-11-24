@@ -6,7 +6,7 @@ const useSession = () => {
 
   const getItem = async () => {
     const user = JSON.parse(await AsyncStorage.getItem("user"));
-    setUsuario(null)
+    setUsuario(user)
   }
 
   const login = async (user) => {

@@ -1,9 +1,8 @@
-import { Text, Container, VStack, Input, Button } from "native-base"
+import { Text, Container, VStack, Input, Button, View } from "native-base"
 import { useState } from "react";
 import useSession from "../hooks/useSession";
 
-export const Login = ({ navigation }) => {
-
+export const Login = () => {
 
     const [datosForm, setDatosForm] = useState({
         email: 'miliserrano@gmail.com',
@@ -15,7 +14,7 @@ export const Login = ({ navigation }) => {
 
     const Submit = async () => {
 
-        const url = 'http://192.168.0.19:5000/auth/login';
+        const url = 'http://192.168.216.139:5000/auth/login';
         const content = {
             method: 'POST',
             headers: {
@@ -29,15 +28,13 @@ export const Login = ({ navigation }) => {
 
         if(data.ok){
             login(data.usuario)
-          
-
         }else{
             console.log("error", data.msg)
         }
     }
 
     return (
-        <>
+        <View>
 
             <Text style={{ "textAlign": "center", "padding": 14 }}>LOGIN</Text>
             <Container style={{ "minWidth": "100%", "minHeight": "100%" }}>
@@ -58,6 +55,6 @@ export const Login = ({ navigation }) => {
                 </VStack>
             </Container>
 
-        </>
+        </View>
     )
 }
