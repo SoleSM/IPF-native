@@ -1,34 +1,36 @@
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect } from 'react';
 
 const useSession = () => {
-    const [usuario, setUsuario] = useState(null)
-  
-    const getItem = async () => {
-      const user = JSON.parse(await AsyncStorage.getItem("user"));
-      setUsuario(null)
-    }
-  
-    const login = async (user) => {
-      await AsyncStorage.removeItem('user')
-      setUsuario(null)
-  
-      if (user !== null) {
-        await AsyncStorage.setItem("user", JSON.stringify(user));
-        setUsuario(user);
-      }
-    }
-  
-    const logout = async () => {
-      await AsyncStorage.removeItem('user')
-      setUsuario(null)
-    }
-  
-    useEffect(() => {
-      getItem()
-    }, [])
-    
-    return { usuario, login, logout }
+  const [usuario, setUsuario] = useState({})
+
+  const getItem = async () => {
+    const user = JSON.parse(await AsyncStorage.getItem("user"));
+    setUsuario(null)
   }
-  
-  export default useSession
+
+  const login = async (user) => {
+    console.log("user que llega => ", user)
+   
+    await AsyncStorage.setItem("user", JSON.stringify(user));
+
+    if(user !== null ){
+      await setUsuario(user);
+    }
+
+    console.log("usuario", usuario)
+  }
+
+  const logout = async () => {
+    await AsyncStorage.removeItem('user')
+    setUsuario(null)
+  }
+
+  useEffect(() => {
+    getItem()
+  }, [])
+
+  return { usuario, login, logout }
+}
+
+export default useSession

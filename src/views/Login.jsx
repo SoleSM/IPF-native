@@ -1,20 +1,21 @@
 import { Text, Container, VStack, Input, Button } from "native-base"
 import { useState } from "react";
+import useSession from "../hooks/useSession";
 
-export const Login = () => {
+export const Login = ({ navigation }) => {
 
 
     const [datosForm, setDatosForm] = useState({
-        email: '',
-        password: ''
+        email: 'miliserrano@gmail.com',
+        password: 'hola123'
     });
 
     const { email, password } = datosForm;
-
+    const { login } = useSession();
 
     const Submit = async () => {
 
-        const url = 'http://192.168.216.139:5000/auth/login';
+        const url = 'http://192.168.0.19:5000/auth/login';
         const content = {
             method: 'POST',
             headers: {
@@ -26,9 +27,10 @@ export const Login = () => {
         const res = await fetch(url, content)
         const data = await res.json()
 
-        console.log("dsta", data) //no me trae pq tira error
         if(data.ok){
-            console.log("ok",data.usuario)
+            login(data.usuario)
+          
+
         }else{
             console.log("error", data.msg)
         }
