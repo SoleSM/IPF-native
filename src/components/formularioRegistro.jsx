@@ -1,5 +1,8 @@
-import { Text, Container, VStack, Input, Button, Picker, View } from "native-base"
+import { Container, VStack, Input, Button, View } from "native-base"
 import { useState } from "react"
+import { SelectList } from "react-native-dropdown-select-list";
+import { Alert } from "react-native";
+
 
 export const FormularioRegistro = () => {
 
@@ -8,85 +11,106 @@ export const FormularioRegistro = () => {
         apellido: "",
         numeroDni: "",
         sexo: "",
-        fechaDeNacimiento: "",
         email: "",
         password: "",
         tipo: ""
     });
 
-    const { nombre, apellido, numeroDni, sexo, fechaDeNacimiento, email, password, tipo } = data;
+    const { nombre, apellido, numeroDni, sexo, email, password, tipo } = data;
 
-    // const Submit = async () => {
+    const Submit = async () => {
 
-    //     const url = 'http://192.168.216.139:5000/auth/register';
-    //     const content = {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(data)
-    //     }
+        const url = 'http://192.168.0.19:5000/auth/register';
+        const content = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }
 
-    //     const res = await fetch(url, content)
-    //     const dataRes = await res.json()
-    //     console.log(dataRes)
-    //     // if(dataRes.ok){
-    //     //     console.log("usuario registrado con exito", dataRes.usuarioRegistrado)
-    //     // }else{
-    //     //     console.log("error", data.msg)
-    //     // }
-    // }
+        const res = await fetch(url, content)
+        const dataRes = await res.json()
+        console.log("data res", dataRes)
+        if (dataRes.ok) {
+            Alert.alert(
+                "Éxito",
+                `${dataRes.msg}`
+            )
+        } else {
+            return (
+                Alert.alert(
+                    "Error",
+                    `${dataRes.msg.msg}`
+                )
+            )
+        }
+    }
+
+    const selectGenero = [
+        { key: '1', value: 'Femenino' },
+        { key: '2', value: 'Masculino' },
+        { key: '3', value: 'Otro' },
+    ]
+    const selectTipo = [
+        { key: '1', value: 'alumno' },
+        { key: '2', value: 'profesor' },
+        { key: '3', value: 'administrador' },
+    ]
 
 
     return (
         <View>
-            <Text style={{ "textAlign": "center", "padding": 14 }}>LOGIN</Text>
             <Container style={{ "minWidth": "100%", "minHeight": "100%" }}>
                 <VStack space={4} w="75%" maxW="300px" mx="auto">
 
-                    <Input name="nombre" value={nombre}
+                    <Input name="nombre"
+                        value={nombre}
                         variant="rounded"
                         placeholder="Nombre"
-
+                        onChangeText={value => setData({ ...data, nombre: value })}
                     />
                     <Input name='apellido'
                         value={apellido}
-
                         variant="rounded"
                         placeholder="Apellido"
+                        onChangeText={value => setData({ ...data, apellido: value })}
                     />
                     <Input name='numeroDni'
                         value={numeroDni}
-
                         variant="rounded"
                         placeholder="DNI"
+                        onChangeText={value => setData({ ...data, numeroDni: value })}
                     />
-
-
                     <Input name='email'
                         value={email}
-
                         variant="rounded"
                         placeholder="Email"
+                        onChangeText={value => setData({ ...data, email: value })}
                     />
                     <Input name='password'
                         value={password}
-
                         variant="rounded"
                         placeholder="Contraseña"
+                        onChangeText={value => setData({ ...data, password: value })}
+                    />
+                    <SelectList
+                        setSelected={(value) => setData({ ...data, sexo: value })}
+                        data={selectGenero}
+                        save="value"
+                        placeholder="Género"
+                    />
+                    <SelectList
+                        setSelected={(value) => setData({ ...data, tipo: value })}
+                        data={selectTipo}
+                        save="value"
+                        placeholder="Tipo de usuario"
                     />
 
-                    <Picker
-                        style={{ height: 50, width: 150 }}
-                        onValueChange={(value) => setData({...data, sexo: value})}
-                    >
-                        <Picker.Item label="Java" value="java" />
-                        <Picker.Item label="JavaScript" value="js" />
-                    </Picker>
-
-                    <Button >
+                    <Button onPress={Submit}>
                         REGISTRAR
                     </Button>
+
                 </VStack>
             </Container>
         </View>

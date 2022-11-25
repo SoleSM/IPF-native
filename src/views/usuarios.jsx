@@ -9,7 +9,7 @@ export const AgregarUsuario = ({ navigation }) => {
         <View>
             <Container >
                 <Text>Details Screen</Text>
-                <Button onPress={() => navigation.navigate('RegistroUsuario')}>Registrar Usuarios</Button>
+                <Button onPress={() => navigation.navigate('Registro')}>Registrar Usuarios</Button>
                 <Text>Screen Agregar Usuario</Text>
             </Container>
         </View>

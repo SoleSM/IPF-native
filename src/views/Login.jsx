@@ -14,7 +14,7 @@ export const Login = () => {
 
     const Submit = async () => {
 
-        const url = 'http://192.168.216.139:5000/auth/login';
+        const url = 'http://192.168.0.19:5000/auth/login';
         const content = {
             method: 'POST',
             headers: {

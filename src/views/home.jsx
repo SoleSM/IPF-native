@@ -15,7 +15,7 @@ export const Home = ({ navigation }) => {
                         <Image source={require('../../assets/agregarUsuario.png')} alt="Alternate Text" size="xl" />
                         <Text style={styles.texto}>Usuarios</Text>
                     </Button>
-                    <Button style={styles.button}>
+                    <Button style={styles.button} onPress={() => navigation.navigate('Publicaciones')}>
                         <Image source={require('../../assets/altoparlante.png')} alt="Alternate Text" size="xl" />
                         <Text style={styles.texto}>Anuncios</Text>
                     </Button>
