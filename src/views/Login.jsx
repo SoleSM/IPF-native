@@ -1,8 +1,9 @@
-import { Text, Container, VStack, Input, Button, View } from "native-base"
+import { Text, Container, VStack, Input, Button, View} from "native-base"
 import { useState } from "react";
 import useSession from "../hooks/useSession";
+import { Alert } from "react-native";
 
-export const Login = () => {
+export const Login = ({navigation}) => {
 
     const [datosForm, setDatosForm] = useState({
         email: 'miliserrano@gmail.com',
@@ -14,7 +15,7 @@ export const Login = () => {
 
     const Submit = async () => {
 
-        const url = 'http://192.168.0.19:5000/auth/login';
+        const url = 'http://192.168.216.139:5000/auth/login';
         const content = {
             method: 'POST',
             headers: {
@@ -28,8 +29,16 @@ export const Login = () => {
 
         if(data.ok){
             login(data.usuario)
+            Alert.alert(
+                'Bienvenido',
+                `${data.msg}`
+            )
+            navigation.navigate('Home')
         }else{
-            console.log("error", data.msg)
+            Alert.alert(
+                'Error',
+                `${data.msg}`
+            )
         }
     }
 

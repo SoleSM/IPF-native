@@ -1,34 +1,38 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login } from "../views/Login";
 import { Home } from "../views/home";
 import { Register } from "../views/register";
 import { AgregarUsuario } from "../views/usuarios";
 import { Publicaciones } from "../views/publicaciones";
 import useSession from "../hooks/useSession";
-import { useState, useEffect } from 'react'
+import { Button } from "native-base";
+import { NativeBaseProvider } from "native-base";
+
 
 const Stack = createNativeStackNavigator();
 
-export const Rooter = () => {
-    const [initial, setInitial] = useState('')
-    const { usuario } = useSession();
+export const Rooter = ({ navigation }) => {
 
-    useEffect(() => {
-        usuario !== null
-        ? setInitial('Home')
-        : setInitial('Login')
-    }, [usuario])
-    
+    const { logout } = useSession();
+
+    const buttonLogout = (
+        <Button onPress={async () => {
+            logout()
+            navigation.navigate('Login')
+        }}>Salir</Button>
+    )
+
     return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName={initial}>
-                <Stack.Screen name="Home" component={Home} />
-                <Stack.Screen name="Login" component={Login} />
-                <Stack.Screen name="Usuarios" component={AgregarUsuario}/>
-                <Stack.Screen name="Registro" component={Register}/>
-                <Stack.Screen name="Publicaciones" component={Publicaciones}/>
+        <NativeBaseProvider>
+            <Stack.Navigator>
+                <Stack.Screen name="Home" component={Home}
+                    options={{
+                        headerRight: () => buttonLogout
+                    }}
+                />
+                <Stack.Screen name="Usuarios" component={AgregarUsuario} />
+                <Stack.Screen name="Registro" component={Register} />
+                <Stack.Screen name="Publicaciones" component={Publicaciones} />
             </Stack.Navigator>
-        </NavigationContainer>
+        </NativeBaseProvider>
     )
 }

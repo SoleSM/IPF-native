@@ -15,7 +15,7 @@ const useSession = () => {
     await AsyncStorage.setItem("user", JSON.stringify(user));
 
     if(user !== null ){
-      await setUsuario(user);
+       setUsuario(user);
     }
 
     console.log("usuario", usuario)
@@ -24,6 +24,7 @@ const useSession = () => {
   const logout = async () => {
     await AsyncStorage.removeItem('user')
     setUsuario(null)
+    console.log("logout", usuario)
   }
 
   useEffect(() => {

@@ -5,11 +5,12 @@ import useSession from "../hooks/useSession"
 export const Home = ({ navigation }) => {
 
     const { usuario } = useSession();
+   
 
     return (
         <View>
             <Container style={styles.container}>
-                <Text>Bienvenid@ {`${usuario.nombre}`}</Text>
+                <Text style={styles.textoBienvenida}>¡ Bienvenid@ {`${usuario.nombre}`} !</Text>
                 <VStack space={4}>
                     <Button style={styles.button} onPress={() => navigation.navigate('Usuarios')}>
                         <Image source={require('../../assets/agregarUsuario.png')} alt="Alternate Text" size="xl" />
@@ -35,7 +36,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#9c27b0',
         minWidth: '100%',
-        height: '100%'
+        height: '100%',
+        paddingTop: 20
+    },
+    textoBienvenida:{
+        fontSize: 15,
+        marginBottom: 10,
+        color: "white"
     },
     button: {
         width: 200,

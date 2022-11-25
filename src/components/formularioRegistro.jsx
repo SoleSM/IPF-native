@@ -2,7 +2,7 @@ import { Container, VStack, Input, Button, View } from "native-base"
 import { useState } from "react"
 import { SelectList } from "react-native-dropdown-select-list";
 import { Alert } from "react-native";
-
+import { StyleSheet } from "react-native";
 
 export const FormularioRegistro = () => {
 
@@ -20,7 +20,7 @@ export const FormularioRegistro = () => {
 
     const Submit = async () => {
 
-        const url = 'http://192.168.0.19:5000/auth/register';
+        const url = 'http://192.168.216.139:5000/auth/register';
         const content = {
             method: 'POST',
             headers: {
@@ -32,6 +32,7 @@ export const FormularioRegistro = () => {
         const res = await fetch(url, content)
         const dataRes = await res.json()
         console.log("data res", dataRes)
+
         if (dataRes.ok) {
             Alert.alert(
                 "Éxito",
@@ -61,8 +62,8 @@ export const FormularioRegistro = () => {
 
     return (
         <View>
-            <Container style={{ "minWidth": "100%", "minHeight": "100%" }}>
-                <VStack space={4} w="75%" maxW="300px" mx="auto">
+         
+                <VStack space={4} w="100%" mx="auto">
 
                     <Input name="nombre"
                         value={nombre}
@@ -107,12 +108,19 @@ export const FormularioRegistro = () => {
                         placeholder="Tipo de usuario"
                     />
 
-                    <Button onPress={Submit}>
+
+                    <Button style={styles.button} onPress={Submit}>
                         REGISTRAR
                     </Button>
 
                 </VStack>
-            </Container>
+         
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    button: {
+        width: 200
+    }
+})
