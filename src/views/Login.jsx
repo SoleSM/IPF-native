@@ -1,7 +1,8 @@
-import { Text, Container, VStack, Input, Button, View} from "native-base"
+import { Text, Container, VStack, Input, Button, View, Image } from "native-base"
 import { useState } from "react";
 import useSession from "../hooks/useSession";
 import { Alert } from "react-native";
+import { StyleSheet } from "react-native";
 
 export const Login = ({navigation}) => {
 
@@ -33,7 +34,7 @@ export const Login = ({navigation}) => {
                 'Bienvenido',
                 `${data.msg}`
             )
-            navigation.navigate('Home')
+            navigation.navigate('Logueado')
         }else{
             Alert.alert(
                 'Error',
@@ -43,11 +44,13 @@ export const Login = ({navigation}) => {
     }
 
     return (
-        <View>
+        <View style={styles.container}>
 
-            <Text style={{ "textAlign": "center", "padding": 14 }}>LOGIN</Text>
+           
             <Container style={{ "minWidth": "100%", "minHeight": "100%" }}>
-                <VStack space={4} w="75%" maxW="300px" mx="auto">
+                <VStack  style={styles.boxLogin} space={4} w="75%" maxW="300px" mx="auto">
+                <Image style={{"alignSelf": "center"}} source={require('../../assets/logo.png')} alt="logo" size="xl" />
+                <Text style={styles.titulo}>LOGIN</Text>
                     <Input name="email" value={email}
                         variant="rounded"
                         placeholder="Email"
@@ -58,7 +61,7 @@ export const Login = ({navigation}) => {
                         onChangeText={(value) => setDatosForm({ ...datosForm, password: value })}
                         variant="rounded"
                         placeholder="Contraseña" />
-                    <Button onPress={ Submit}>
+                    <Button style={styles.button} onPress={ Submit}>
                         Iniciar Sesión
                     </Button>
                 </VStack>
@@ -67,3 +70,24 @@ export const Login = ({navigation}) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        minWidth: '100%',
+        minHeight: '100%'
+    },
+    titulo: {
+        color: "#9c27b0",
+        fontSize: 20,
+        textAlign: "center",
+        fontWeight: "bold"
+    }, 
+    button: {
+        alignSelf: "center",
+        backgroundColor: "#9c27b0",
+        width: 200
+    },
+    boxLogin:{
+        marginTop: '20%'
+    }
+})
